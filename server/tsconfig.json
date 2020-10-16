@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "lib": [
+      "es2017"
+    ],
+    "target": "es6",
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "module": "commonjs",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true, 
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "traceResolution": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "outDir": "./out",
+  },
+  "include": [
+    "./src/**/*",
+    "./test/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
