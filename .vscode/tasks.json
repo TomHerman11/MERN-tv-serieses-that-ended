@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "server-watch",
+            "type": "shell",
+            "command": "",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "server-watch-ts",
+                "server-watch-node"
+            ]
+        },
+        {
+            "label": "server-watch-ts",
+            "type": "shell",
+            "command": "npm run watch-ts",
+            "options": {
+                "cwd": "${workspaceFolder}/server"
+            },
+            "isBackground": true,
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
+        },
+        {
+            "label": "server-watch-node",
+            "type": "shell",
+            "command": "npm run watch-node",
+            "options": {
+                "cwd": "${workspaceFolder}/server"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+    ]
+}
