@@ -1,13 +1,12 @@
 import { Collection } from 'mongodb';
 import _ from 'lodash';
 
-interface Series {
+interface TvSeries {
     title: string,
     yearBegin: number,
     yearEnd: number,
     popularity: number
 }
-
 
 const { gql } = require('apollo-server-express');
 export const typeDefs = gql`
@@ -36,12 +35,11 @@ export const resolversWithMongoDb = (seriesesDb: Collection<any>) => {
                 return await seriesesDb.find().toArray();
             },
             series: async (root: any, { title }: { title: string }) => {
-                const res = (await seriesesDb.find({ title }).toArray());
-                return !_.isEmpty(res) ? res[0] : null;
+                return await seriesesDb.findOne({ title });
             },
         },
         Mutation: {
-            addSeries: async (root: any, { title, yearBegin, yearEnd, popularity }: Series) => {
+            addSeries: async (root: any, { title, yearBegin, yearEnd, popularity }: TvSeries) => {
                 return await seriesesDb.insertOne({ title, yearBegin, yearEnd, popularity });
             }
         }

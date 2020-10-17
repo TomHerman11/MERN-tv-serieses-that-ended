@@ -1,0 +1,20 @@
+.TvSeries {
+    display: flex;
+    flex-direction: column;
+    min-height: 20vh;
+    width: 29vw;
+    text-align: center;
+    background-color: azure;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.TvSeriesTitle {
+    height: 70px;
+}
+
+/* .TvSeriesInformation {
+
+} */
