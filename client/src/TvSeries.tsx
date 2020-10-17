@@ -9,8 +9,8 @@ function TvSeries({ _id, title, yearBegin, yearEnd, popularity }: TvSeriesInterf
                 <h3>{title}</h3>
             </div>
             <div className="TvSeriesInformation">
-                <h5>{yearBegin}-{yearEnd}</h5>
                 <h5>{popularity}%</h5>
+                <h5>{yearBegin}-{yearEnd}</h5>
             </div>
         </div>
     );

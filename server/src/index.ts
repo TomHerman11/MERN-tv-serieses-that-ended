@@ -26,7 +26,7 @@ const start = async () => {
 
     // Server listen:
     app.listen({ port: PORT }, () =>
-      console.log(`🚀 Server ready at http://localhost:4000${apolloServer.graphqlPath}`)
+      console.log(`🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
     );
 
   } catch (e) {
