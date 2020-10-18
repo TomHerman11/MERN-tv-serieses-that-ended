@@ -1,23 +1,12 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
-import { TvSeriesInterface } from './TvSeriesInterface';
+import { useQuery } from '@apollo/client';
+import { TvSeriesInterface, TV_SERIESES_QUERY } from './Utils';
 import TvSeries from './TvSeries';
 import './TvSerieses.css';
 
-const TV_SERIESES = gql`
-query GetTvSerieses {
-    serieses {
-        id
-        title
-        yearBegin
-        yearEnd
-        popularity
-    }
-  }
-`;
 
 function TvSerieses() {
-    const { loading, error, data } = useQuery(TV_SERIESES);
+    const { loading, error, data } = useQuery(TV_SERIESES_QUERY);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {JSON.stringify(error)}</p>;

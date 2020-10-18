@@ -1,5 +1,5 @@
 import React from 'react';
-import { TvSeriesInterface } from './TvSeriesInterface';
+import { TvSeriesInterface } from './Utils';
 import './TvSeries.css';
 
 function TvSeries({ id, title, yearBegin, yearEnd, popularity }: TvSeriesInterface) {

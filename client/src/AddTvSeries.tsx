@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
-// import { TvSeriesInterface } from './TvSeriesInterface';
+import { TV_SERIESES_QUERY } from './Utils';
 import './AddTvSeries.css';
 
 const ADD_TV_SERIES = gql`
@@ -16,12 +16,25 @@ const ADD_TV_SERIES = gql`
 `;
 
 function AddTvSeries() {
-    const [addTvSeries, { loading, error, data }] = useMutation(ADD_TV_SERIES);
+    const [addTvSeries, { loading, error, data }] = useMutation(ADD_TV_SERIES, {
+        update: (cache, { data: { addSeries } }) => {
+            console.log(addSeries);
+            const queryRes = cache.readQuery({ query: TV_SERIESES_QUERY }) as { serieses: any[] };
+            cache.writeQuery({
+                query: TV_SERIESES_QUERY, data: {
+                    serieses: [...queryRes.serieses, addSeries]
+                }
+            });
+        }
+    });
+
     if (error) return <p>Error: {JSON.stringify(error)}</p>;
 
     return (
         <div className="AddTvSeries" onClick={() => {
-            addTvSeries({ variables: { title: 'tom', yearBegin: 2020, yearEnd: 2020, popularity: 100 } });
+            addTvSeries({
+                variables: { title: 'tom', yearBegin: 2020, yearEnd: 2020, popularity: 100 }
+            });
         }}>
             Add Tv Series
             {loading && <p>Loading...</p>}

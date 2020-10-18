@@ -9,11 +9,11 @@ interface TvSeriesParameters {
 }
 
 interface MongoTvSeries extends TvSeriesParameters {
-    _id: number
+    _id: string
 }
 
 interface TvSeries extends TvSeriesParameters {
-    id: number
+    id: string
 }
 
 
@@ -39,7 +39,7 @@ export const typeDefs = gql`
 
 function constructTvSeriesObject(mongoDbSeriesResult: MongoTvSeries): TvSeries {
     return {
-        id: parseInt(mongoDbSeriesResult._id.toString()),
+        id: mongoDbSeriesResult._id.toLocaleString(),
         title: mongoDbSeriesResult.title,
         yearBegin: mongoDbSeriesResult.yearBegin,
         yearEnd: mongoDbSeriesResult.yearEnd,
