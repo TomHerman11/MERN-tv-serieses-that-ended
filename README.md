@@ -2,6 +2,8 @@
 A MERN (mongoDB, Express.js, React & Node.js) project - Presenting, Adding (TBD Deleting & Editing) the BEST TV Serieses That Ended.
 
 Using Apollo GraphQL for API.
+
+Client & Server are written in TypeScript.
 <br>
 <br>
 
