@@ -2,7 +2,7 @@ import React from 'react';
 import { TvSeriesInterface } from './TvSeriesInterface';
 import './TvSeries.css';
 
-function TvSeries({ _id, title, yearBegin, yearEnd, popularity }: TvSeriesInterface) {
+function TvSeries({ id, title, yearBegin, yearEnd, popularity }: TvSeriesInterface) {
     return (
         <div className="TvSeries">
             <div className="TvSeriesTitle">

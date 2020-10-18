@@ -7,7 +7,7 @@ import './TvSerieses.css';
 const TV_SERIESES = gql`
 query GetTvSerieses {
     serieses {
-        _id
+        id
         title
         yearBegin
         yearEnd
@@ -24,7 +24,7 @@ function TvSerieses() {
 
     return (
         <div className="TvSerieses">
-            {data.serieses.map((series: TvSeriesInterface) => <TvSeries key={series._id} {...series} />)}
+            {data.serieses.map((series: TvSeriesInterface) => <TvSeries key={series.id} {...series} />)}
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import AddTvSeries from './AddTvSeries';
 import TvSerieses from './TvSerieses';
 import './App.css';
 
@@ -16,6 +17,7 @@ function App() {
         <header className="App-header">
           <h1>Best TV Serieses That Ended</h1>
           <h2>{"Popularity & Years on Air"}</h2>
+          <AddTvSeries />
         </header>
         <div className="App-body">
           <TvSerieses />

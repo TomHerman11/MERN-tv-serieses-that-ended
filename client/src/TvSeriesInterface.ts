@@ -1,5 +1,5 @@
 export interface TvSeriesInterface {
-    _id: number,
+    id: number,
     title: string,
     yearBegin: number,
     yearEnd: number,

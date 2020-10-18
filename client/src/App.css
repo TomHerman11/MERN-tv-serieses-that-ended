@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  background-color: #990099;
+  background-color: #668cff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,8 +16,8 @@
   color: white;
 }
 
-.App-header > h1, .App-header > h2  {
-  margin: 10px;
+.App-header > *  {
+  margin: 4px;
 }
 
 .App-body {
