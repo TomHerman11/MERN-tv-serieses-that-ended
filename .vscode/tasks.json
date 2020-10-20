@@ -4,6 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "client-watch",
+            "type": "npm",
+            "script": "start",
+            "options": {
+                "cwd": "${workspaceFolder}/client"
+            }
+        },
+        {
             "label": "server-watch",
             "type": "shell",
             "command": "",
