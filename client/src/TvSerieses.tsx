@@ -13,7 +13,7 @@ function TvSerieses() {
 
     return (
         <div className="TvSerieses">
-            {data.serieses.map((series: TvSeriesInterface) => <TvSeries key={series.id} {...series} />)}
+            {data?.serieses?.map((series: TvSeriesInterface) => <TvSeries key={series.id} {...series} />)}
         </div>
     );
 }
