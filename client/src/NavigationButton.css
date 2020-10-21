@@ -1,0 +1,30 @@
+.navigationButton {
+    /* top right bottom left: */
+    padding: 5px 30px 5px 30px; 
+    margin: 5px;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 3px;
+    padding: 5px;
+
+    background-color: #ffb84d;
+    min-height: 20px;
+    min-width: 50px;
+    
+    cursor: pointer;
+}
+
+.navigationButton> h3, .navigationButton> h4, .navigationButton> h5, .navigationButton> h6  {
+    margin: unset;
+}
+
+.noSelectText {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  }

@@ -19,3 +19,8 @@ query GetTvSerieses {
     }
   }
 `;
+
+export const routerRoutes = {
+    home: '/',
+    addTvSeries: '/add-tv-series'
+};
