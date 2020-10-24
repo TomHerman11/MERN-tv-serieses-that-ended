@@ -30,6 +30,9 @@
 
 input[type="text"], input[type="submit"]  {
     all: unset;
-    height: 100%;
-    width: 100%;
+    width: 99%;
 }
+
+input[type="submit"]:focus {
+    box-shadow: 0 0 3pt 0.5pt orange;
+  }

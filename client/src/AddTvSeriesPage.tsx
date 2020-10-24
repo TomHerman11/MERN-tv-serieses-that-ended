@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as _ from 'lodash';
 import { useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom";
-import { MUTATION_ADD_TV_SERIES, QUERY_TV_SERIESES, routerRoutes } from './Utils';
+import { MUTATION_ADD_TV_SERIES, QUERY_TV_SERIESES, routerRoutes, TvSeriesInterface } from './Utils';
 import './AddTvSeriesPage.css';
 
 const EARLIEST_YEAR_BEGIN = 1920;
@@ -27,9 +27,26 @@ function AddTvSeriesPage() {
         // Update can be used to update the client's cache:
         update: (cache, { data: { addSeries } }) => {
             const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: any[] };
+
+            // When we updated the cache we want to keep on the sorted result from the server.
+            function insertIntoSortedTvSerieses(serieses: TvSeriesInterface[], newSeries: TvSeriesInterface): TvSeriesInterface[] {
+                if (_.isEmpty(serieses)) return [newSeries];
+
+                // find the index to insert the new series:
+                let index = 0;
+                for (index = 0; index < serieses.length; index++) {
+                    if (newSeries.popularity > serieses[index].popularity) break;
+                    else if (
+                        newSeries.popularity === serieses[index].popularity &&
+                        newSeries.title < serieses[index].title
+                    ) break;
+                }
+                return [...serieses.slice(0, index), newSeries, ...serieses.slice(index, serieses.length)];
+            };
+
             cache.writeQuery({
                 query: QUERY_TV_SERIESES, data: {
-                    serieses: [...queryRes?.serieses ? queryRes.serieses : [], addSeries]
+                    serieses: insertIntoSortedTvSerieses(queryRes?.serieses, addSeries)
                 }
             });
         }
@@ -81,7 +98,7 @@ function AddTvSeriesPage() {
                     <select value={yearBegin} onChange={(e) => setYearBegin(parseInt(e.target.value))}>
                         {
                             _.range(new Date().getFullYear(), EARLIEST_YEAR_BEGIN - 1, -1).map(year => {
-                                return <option value={year}>{year}</option>
+                                return <option key={year} value={year}>{year}</option>
                             })
                         }
                     </select>
@@ -93,7 +110,7 @@ function AddTvSeriesPage() {
                     <select value={yearEnd} onChange={(e) => setYearEnd(parseInt(e.target.value))}>
                         {
                             _.range(new Date().getFullYear(), yearBegin - 1, -1).map(year => {
-                                return <option value={year}>{year}</option>
+                                return <option key={year} value={year}>{year}</option>
                             })
                         }
                     </select>
@@ -105,7 +122,7 @@ function AddTvSeriesPage() {
                     <select value={popularity} onChange={(e) => setPopularity(parseInt(e.target.value))}>
                         {
                             _.range(100, - 1, -1).map(option => {
-                                return <option value={option}>{option}</option>
+                                return <option key={option} value={option}>{option}</option>
                             })
                         }
                     </select>
