@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import * as _ from 'lodash';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom";
-import { TV_SERIESES_QUERY, routerRoutes } from './Utils';
+import { MUTATION_ADD_TV_SERIES, QUERY_TV_SERIESES, routerRoutes } from './Utils';
 import './AddTvSeriesPage.css';
 
 const EARLIEST_YEAR_BEGIN = 1920;
@@ -23,24 +23,12 @@ function AddTvSeriesPage() {
     }
 
     // Apollo insertion:
-    const ADD_TV_SERIES = gql`
-    mutation AddTvSeries($title: String!, $yearBegin: Int!, $yearEnd: Int!, $popularity: Int!) {
-        addSeries(title: $title, yearBegin: $yearBegin, yearEnd: $yearEnd, popularity: $popularity) {
-            id
-            title
-            yearBegin
-            yearEnd
-            popularity
-        }
-    }
-`;
-
-    const [addTvSeries, { loading, error, data }] = useMutation(ADD_TV_SERIES, {
+    const [addTvSeries, { loading, error, data }] = useMutation(MUTATION_ADD_TV_SERIES, {
         // Update can be used to update the client's cache:
         update: (cache, { data: { addSeries } }) => {
-            const queryRes = cache.readQuery({ query: TV_SERIESES_QUERY }) as { serieses: any[] };
+            const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: any[] };
             cache.writeQuery({
-                query: TV_SERIESES_QUERY, data: {
+                query: QUERY_TV_SERIESES, data: {
                     serieses: [...queryRes?.serieses ? queryRes.serieses : [], addSeries]
                 }
             });
@@ -55,10 +43,19 @@ function AddTvSeriesPage() {
             return;
         }
 
+        // make 'title' for ease of search:
+        setTitle(title.toLowerCase());
+
         // Add tvSeries to the db:
         addTvSeries({
             variables: { title, yearBegin, yearEnd, popularity }
         });
+
+        // in case redirecting did not work, empty form fields:
+        setTitle('');
+        setYearBegin(CURRENT_YEAR);
+        setYearEnd(CURRENT_YEAR);
+        setPopularity(100);
 
         // Navigate to home route:
         redirectToHomePage();
