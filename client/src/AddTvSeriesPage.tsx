@@ -46,7 +46,6 @@ function AddTvSeriesPage() {
 
             cache.writeQuery({
                 query: QUERY_TV_SERIESES, data: {
-                    // serieses: [...queryRes?.serieses ? queryRes.serieses : [], addSeries]
                     serieses: insertIntoSortedTvSerieses(queryRes?.serieses, addSeries)
                 }
             });
