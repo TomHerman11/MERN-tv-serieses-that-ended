@@ -8,7 +8,8 @@ import {
 import AddTvSeriesPage from './AddTvSeriesPage';
 // import AddTvSeriesButton from './AddTvSeriesButton';
 import NavigationButton from './NavigationButton';
-import TvSerieses from './TvSerieses';
+import TvSeriesesPage from './TvSeriesesPage';
+import TvSeriesPage from './TvSeriesPage';
 import RouteNotFound from './RouteNotFound';
 import { routerRoutes } from './Utils';
 import './App.css';
@@ -36,10 +37,13 @@ function App() {
 
           <Switch>
             <Route exact path={routerRoutes.home}>
-              <TvSerieses />
+              <TvSeriesesPage />
             </Route>
-            <Route path={routerRoutes.addTvSeries}>
+            <Route exact path={routerRoutes.addTvSeries}>
               <AddTvSeriesPage />
+            </Route>
+            <Route path={`${routerRoutes.tvSeries}/:tvSeriesTitle`}>
+              <TvSeriesPage />
             </Route>
             <Route path="*">
               <RouteNotFound />
