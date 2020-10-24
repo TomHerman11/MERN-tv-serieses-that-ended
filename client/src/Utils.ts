@@ -56,6 +56,6 @@ export function capitalizeFirstLetter(s: string) {
 
 export function capitalizeFirstLetters(s: string | undefined): string | undefined {
     if (!s) return;
-    const words = s.split(/[ ,]+/);
+    const words = s.split(' ');
     return words.map(word => capitalizeFirstLetter(word)).join(' ');
 }
