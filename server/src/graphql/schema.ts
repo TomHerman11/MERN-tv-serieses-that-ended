@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 import _ from 'lodash';
 
 interface TvSeriesParameters {
@@ -34,10 +34,9 @@ export const typeDefs = gql`
 
       type Mutation {
         addSeries(title: String!, yearBegin: Int!, yearEnd: Int!, popularity: Int!): Series
+        deleteSeries(id: ID!): String
       }
     `;
-
-// deleteSeries(title: String!): Series
 
 function constructTvSeriesObject(mongoDbSeriesResult: MongoTvSeries): TvSeries {
     return {
@@ -75,6 +74,17 @@ export const resolversWithMongoDb = (seriesesDb: Collection<any>) => {
             addSeries: async (root: any, { title, yearBegin, yearEnd, popularity }: TvSeriesParameters): Promise<TvSeries> => {
                 const response = await seriesesDb.insertOne({ title, yearBegin, yearEnd, popularity });
                 return constructTvSeriesObject(response.ops[0]);
+            },
+            deleteSeries: async (root: any, { id }: { id: string }): Promise<String> => {
+                const removeRes = await seriesesDb.deleteOne({ "_id": new ObjectId(id) });
+
+                // If the tvSeries was removed, we return the id of the removed item:
+                if (removeRes.deletedCount) {
+                    return id;
+                }
+
+                // If could not remove the item, return "empty" id:
+                return "";
             }
         }
     }
