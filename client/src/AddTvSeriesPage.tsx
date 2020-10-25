@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import * as _ from 'lodash';
 import { useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom";
-import { MUTATION_ADD_TV_SERIES, QUERY_TV_SERIESES, routerRoutes, TvSeriesInterface } from './Utils';
+import {
+    MUTATION_ADD_TV_SERIES,
+    QUERY_TV_SERIESES,
+    insertIntoSortedTvSerieses,
+    routerRoutes,
+    TvSeriesInterface
+} from './Utils';
 import './AddTvSeriesPage.css';
 
 const EARLIEST_YEAR_BEGIN = 1920;
@@ -23,37 +29,23 @@ function AddTvSeriesPage() {
     }
 
     // Apollo insertion:
-    const [addTvSeries, { loading, error, data }] = useMutation(MUTATION_ADD_TV_SERIES, {
+    const [addTvSeries, { loading, error }] = useMutation(MUTATION_ADD_TV_SERIES, {
         // Update can be used to update the client's cache:
         update: (cache, { data: { addSeries } }) => {
-            const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: any[] };
-
-            // When we updated the cache we want to keep on the sorted result from the server.
-            function insertIntoSortedTvSerieses(serieses: TvSeriesInterface[], newSeries: TvSeriesInterface): TvSeriesInterface[] {
-                if (_.isEmpty(serieses)) return [newSeries];
-
-                // find the index to insert the new series:
-                let index = 0;
-                for (index = 0; index < serieses.length; index++) {
-                    if (newSeries.popularity > serieses[index].popularity) break;
-                    else if (
-                        newSeries.popularity === serieses[index].popularity &&
-                        newSeries.title < serieses[index].title
-                    ) break;
-                }
-                return [...serieses.slice(0, index), newSeries, ...serieses.slice(index, serieses.length)];
-            };
-
+            const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: TvSeriesInterface[] };
             cache.writeQuery({
                 query: QUERY_TV_SERIESES, data: {
-                    serieses: insertIntoSortedTvSerieses(queryRes?.serieses, addSeries)
+                    serieses: insertIntoSortedTvSerieses(queryRes?.serieses, addSeries) // keep sorted cache
                 }
             });
         }
     });
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error. Try to refresh.</p>;
+
     // Form submit:
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
         if (title.length === 0) {
             setTitleEmptyOnSubmit(true);
@@ -64,7 +56,7 @@ function AddTvSeriesPage() {
         setTitle(title.toLowerCase());
 
         // Add tvSeries to the db:
-        addTvSeries({
+        await addTvSeries({
             variables: { title, yearBegin, yearEnd, popularity }
         });
 

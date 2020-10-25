@@ -8,7 +8,7 @@ function TvSeriesesPage() {
     const { loading, error, data } = useQuery(QUERY_TV_SERIESES);
 
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {JSON.stringify(error)}</p>;
+    if (error) return <p>Error. Try to refresh.</p>;
 
     return (
         <div className="TvSeriesesPage">

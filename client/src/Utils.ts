@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { gql } from '@apollo/client';
 
 export interface TvSeriesInterface {
@@ -44,6 +45,12 @@ mutation AddTvSeries($title: String!, $yearBegin: Int!, $yearEnd: Int!, $popular
 }
 `;
 
+export const MUTATION_DELETE_TV_SERIES = gql`
+mutation DeleteTvSeries($id: ID!) {
+    deleteSeries(id: $id)
+}
+`;
+
 export const routerRoutes = {
     home: '/',
     addTvSeries: '/add-tv-series',
@@ -59,3 +66,29 @@ export function capitalizeFirstLetters(s: string | undefined): string | undefine
     const words = s.split(' ');
     return words.map(word => capitalizeFirstLetter(word)).join(' ');
 }
+
+export function insertIntoSortedTvSerieses(serieses: TvSeriesInterface[], newSeries: TvSeriesInterface): TvSeriesInterface[] {
+    if (_.isEmpty(serieses)) return [newSeries];
+
+    // find the index to insert the new series:
+    let index = 0;
+    for (index = 0; index < serieses.length; index++) {
+        if (newSeries.popularity > serieses[index].popularity) break;
+        else if (
+            newSeries.popularity === serieses[index].popularity &&
+            newSeries.title < serieses[index].title
+        ) break;
+    }
+    return [...serieses.slice(0, index), newSeries, ...serieses.slice(index, serieses.length)];
+};
+
+export function deleteSeriesFromArray(serieses: TvSeriesInterface[], deletedSeries: string): TvSeriesInterface[] {
+    // find the index to remove:
+    let index = 0;
+    for (index = 0; index < serieses.length; index++) {
+        if (deletedSeries === serieses[index].id) {
+            return [...serieses.slice(0, index), ...serieses.slice(index + 1, serieses.length)];
+        }
+    }
+    return serieses;
+};

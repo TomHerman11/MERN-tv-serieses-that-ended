@@ -3,3 +3,18 @@
     flex-direction: column;
     align-items: center;
 }
+
+.RemoveTvSeriesButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid red;
+    color: red;
+    min-width: 14vw;
+    min-height: 10vmin;
+    cursor: pointer;
+}
+
+.RemoveTvSeriesButton > h5 {
+    margin: 0;
+}
