@@ -34,6 +34,7 @@ export const typeDefs = gql`
 
       type Mutation {
         addSeries(title: String!, yearBegin: Int!, yearEnd: Int!, popularity: Int!): Series
+        updateSeries(id: ID!, title: String!, yearBegin: Int!, yearEnd: Int!, popularity: Int!): Series
         deleteSeries(id: ID!): String
       }
     `;
@@ -66,6 +67,7 @@ export const resolversWithMongoDb = (seriesesDb: Collection<any>) => {
                     return constructTvSeriesObject(series);
                 }).sort(compareTvSerieses);
             },
+
             series: async (root: any, { title }: { title: string }): Promise<TvSeries> => {
                 return constructTvSeriesObject(await seriesesDb.findOne({ title }));
             },
@@ -75,11 +77,32 @@ export const resolversWithMongoDb = (seriesesDb: Collection<any>) => {
                 const response = await seriesesDb.insertOne({ title, yearBegin, yearEnd, popularity });
                 return constructTvSeriesObject(response.ops[0]);
             },
+
+            updateSeries: async (root: any, { id, title, yearBegin, yearEnd, popularity }: TvSeries): Promise<TvSeries> => {
+                const updateRes = await seriesesDb.findOneAndUpdate(
+                    { _id: new ObjectId(id) },
+                    {
+                        $set:
+                        {
+                            title: title,
+                            yearBegin: yearBegin,
+                            yearEnd: yearEnd,
+                            popularity: popularity
+                        }
+                    }
+                );
+                // if 'find' failed, 'updateRes.value' is 'null':
+                if (!updateRes.value) {
+                    return { id: "", title, yearBegin, yearEnd, popularity };
+                }
+                return { id, title, yearBegin, yearEnd, popularity };
+            },
+
             deleteSeries: async (root: any, { id }: { id: string }): Promise<String> => {
-                const removeRes = await seriesesDb.deleteOne({ "_id": new ObjectId(id) });
+                const removeRes = await seriesesDb.findOneAndDelete({ "_id": new ObjectId(id) });
 
                 // If the tvSeries was removed, we return the id of the removed item:
-                if (removeRes.deletedCount) {
+                if (removeRes?.value) {
                     return id;
                 }
 

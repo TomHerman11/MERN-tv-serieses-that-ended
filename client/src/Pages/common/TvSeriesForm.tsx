@@ -1,48 +1,38 @@
 import React, { useState } from 'react';
-import * as _ from 'lodash';
-import { useMutation } from '@apollo/client';
+import _ from 'lodash';
 import { useHistory } from "react-router-dom";
-import {
-    MUTATION_ADD_TV_SERIES,
-    QUERY_TV_SERIESES,
-    insertIntoSortedTvSerieses,
-    routerRoutes,
-    TvSeriesInterface
-} from './Utils';
-import './AddTvSeriesPage.css';
+import { TvSeriesPropsInterface, routerRoutes } from '../../Utils';
+import './TvSeriesForm.css'
 
 const EARLIEST_YEAR_BEGIN = 1920;
 const CURRENT_YEAR = new Date().getFullYear();
 
-function AddTvSeriesPage() {
-    // Form values:    
-    const [title, setTitle] = useState('');
-    const [yearBegin, setYearBegin] = useState(CURRENT_YEAR);
-    const [yearEnd, setYearEnd] = useState(CURRENT_YEAR);
-    const [popularity, setPopularity] = useState(100);
+function TvSeriesForm(
+    {
+        submitButtonString,
+        shouldRedirectAfterSubmit,
+        tvSeriesProps,
+        onSubmitDbAction
+    }:
+        {
+            submitButtonString: string,
+            shouldRedirectAfterSubmit: boolean,
+            tvSeriesProps: TvSeriesPropsInterface,
+            onSubmitDbAction: (tvSeries: any)
+                => Promise<void>
+        }
+) {
+    const [title, setTitle] = useState(tvSeriesProps.title);
+    const [yearBegin, setYearBegin] = useState(tvSeriesProps.yearBegin >= 0 ? tvSeriesProps.yearBegin : CURRENT_YEAR);
+    const [yearEnd, setYearEnd] = useState(tvSeriesProps.yearEnd >= 0 ? tvSeriesProps.yearEnd : CURRENT_YEAR);
+    const [popularity, setPopularity] = useState(tvSeriesProps.popularity >= 0 ? tvSeriesProps.popularity : 100);
     const [titleEmptyOnSubmit, setTitleEmptyOnSubmit] = useState(false);
 
     // Router:
     const routerHistory = useHistory();
-    const redirectToHomePage = () => {
-        routerHistory.push(routerRoutes.home);
+    const redirectToTvSeriesPage = (title: string) => {
+        routerHistory.push(`${routerRoutes.tvSeries}/${title}`);
     }
-
-    // Apollo insertion:
-    const [addTvSeries, { loading, error }] = useMutation(MUTATION_ADD_TV_SERIES, {
-        // Update can be used to update the client's cache:
-        update: (cache, { data: { addSeries } }) => {
-            const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: TvSeriesInterface[] };
-            cache.writeQuery({
-                query: QUERY_TV_SERIESES, data: {
-                    serieses: insertIntoSortedTvSerieses(queryRes?.serieses, addSeries) // keep sorted cache
-                }
-            });
-        }
-    });
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error. Try to refresh.</p>;
 
     // Form submit:
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -55,10 +45,8 @@ function AddTvSeriesPage() {
         // make 'title' for ease of search:
         setTitle(title.toLowerCase());
 
-        // Add tvSeries to the db:
-        await addTvSeries({
-            variables: { title, yearBegin, yearEnd, popularity }
-        });
+        // call 'dbAction' to apply changes to the db (add, update, etc.):
+        await onSubmitDbAction({ title, yearBegin, yearEnd, popularity });
 
         // in case redirecting did not work, empty form fields:
         setTitle('');
@@ -66,13 +54,15 @@ function AddTvSeriesPage() {
         setYearEnd(CURRENT_YEAR);
         setPopularity(100);
 
-        // Navigate to home route:
-        redirectToHomePage();
+        // Navigate to the new tv series route:
+        if (shouldRedirectAfterSubmit) {
+            redirectToTvSeriesPage(title);
+        }
     }
 
     return (
-        <div className="AddTvSeriesPage">
-            <form onSubmit={handleSubmit} className="AddTvSeriesPage">
+        <div className="TvSeriesForm">
+            <form onSubmit={handleSubmit} className="TvSeriesForm">
                 {/* TITLE: */}
                 <div className="formRow">
                     <input type="text" placeholder={"Title"} value={title} onChange={(e) => {
@@ -120,7 +110,7 @@ function AddTvSeriesPage() {
                     </select>
                 </div>
                 <div className="formRow formRowSubmit">
-                    <input type="submit" value="Add!" />
+                    <input type="submit" value={`${submitButtonString}!`} />
                 </div>
             </form>
             {titleEmptyOnSubmit &&
@@ -130,10 +120,10 @@ function AddTvSeriesPage() {
             }
         </div >
     );
+
 }
 
-export default AddTvSeriesPage;
-
+export default TvSeriesForm;
 
 function isAllowedTitle(value: string): boolean {
     if (value.length > 100) return false;

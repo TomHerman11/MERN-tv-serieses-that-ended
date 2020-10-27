@@ -1,12 +1,15 @@
 import _ from 'lodash';
 import { gql } from '@apollo/client';
 
-export interface TvSeriesInterface {
-    id: string,
+export interface TvSeriesPropsInterface {
     title: string,
     yearBegin: number,
     yearEnd: number,
     popularity: number
+}
+
+export interface TvSeriesInterface extends TvSeriesPropsInterface {
+    id: string
 }
 
 export const QUERY_TV_SERIESES = gql`
@@ -45,6 +48,18 @@ mutation AddTvSeries($title: String!, $yearBegin: Int!, $yearEnd: Int!, $popular
 }
 `;
 
+export const MUTATION_UPDATE_TV_SERIES = gql`
+mutation UpdateTvSeries($id: ID!, $title: String!, $yearBegin: Int!, $yearEnd: Int!, $popularity: Int!) {
+    updateSeries(id: $id, title: $title, yearBegin: $yearBegin, yearEnd: $yearEnd, popularity: $popularity) {
+        id
+        title
+        yearBegin
+        yearEnd
+        popularity
+    }
+}
+`;
+
 export const MUTATION_DELETE_TV_SERIES = gql`
 mutation DeleteTvSeries($id: ID!) {
     deleteSeries(id: $id)
@@ -54,7 +69,7 @@ mutation DeleteTvSeries($id: ID!) {
 export const routerRoutes = {
     home: '/',
     addTvSeries: '/add-tv-series',
-    tvSeries: '/tv-series'
+    tvSeries: '/tv-series',
 };
 
 export function capitalizeFirstLetter(s: string) {

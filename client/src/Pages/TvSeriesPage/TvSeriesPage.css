@@ -4,17 +4,23 @@
     align-items: center;
 }
 
-.RemoveTvSeriesButton {
+.BottomButton {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid red;
-    color: red;
-    min-width: 14vw;
+    border: 2px solid;
+    min-width: 10vw;
     min-height: 10vmin;
     cursor: pointer;
+    margin: 2px;
 }
 
-.RemoveTvSeriesButton > h5 {
-    margin: 0;
+.RedButton{
+    border-color: red;
+    color: red;
+}
+
+.BottomButtons {
+    display: flex;
+    flex-direction: row;
 }

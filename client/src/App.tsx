@@ -5,12 +5,11 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import AddTvSeriesPage from './AddTvSeriesPage';
-// import AddTvSeriesButton from './AddTvSeriesButton';
-import NavigationButton from './NavigationButton';
-import TvSeriesesPage from './TvSeriesesPage';
-import TvSeriesPage from './TvSeriesPage';
-import RouteNotFound from './RouteNotFound';
+import AddTvSeriesPage from './Pages/AddTvSeriesPage/AddTvSeriesPage';
+import NavigationButton from './Pages/common/NavigationButton';
+import TvSeriesesPage from './Pages/TvSeriesesPage/TvSeriesesPage';
+import TvSeriesPage from './Pages/TvSeriesPage/TvSeriesPage';
+import RouteNotFound from './Pages/RouteNotFound';
 import { routerRoutes } from './Utils';
 import './App.css';
 
@@ -32,7 +31,6 @@ function App() {
               <NavigationButton pageTitle="Home" pageRoute={routerRoutes.home} />
               <NavigationButton pageTitle="Add TV Series" pageRoute={routerRoutes.addTvSeries} />
             </div>
-            {/* <AddTvSeriesButton /> */}
           </header>
 
           <Switch>
