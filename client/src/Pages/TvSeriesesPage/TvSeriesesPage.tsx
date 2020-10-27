@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { useHistory } from "react-router-dom";
-import { TvSeriesInterface, QUERY_TV_SERIESES, capitalizeFirstLetters, routerRoutes } from './Utils';
+import { TvSeriesInterface, QUERY_TV_SERIESES, capitalizeFirstLetters, routerRoutes } from '../../Utils';
 import './TvSeriesesPage.css';
 
 function TvSeriesesPage() {

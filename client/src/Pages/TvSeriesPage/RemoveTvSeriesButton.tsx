@@ -1,54 +1,14 @@
 import React from 'react';
-import { useHistory, useParams } from "react-router-dom";
-import { useQuery, useMutation } from '@apollo/client';
+import { useHistory } from "react-router-dom";
+import { useMutation } from '@apollo/client';
 import {
-    QUERY_TV_SERIES,
     QUERY_TV_SERIESES,
     MUTATION_DELETE_TV_SERIES,
-    capitalizeFirstLetters,
     deleteSeriesFromArray,
     TvSeriesInterface,
     routerRoutes
-} from './Utils';
+} from '../../Utils';
 import './TvSeriesPage.css';
-
-function TvSeriesPage() {
-    // react router:
-    let { tvSeriesTitle } = useParams<{ tvSeriesTitle: string }>();
-
-    // apollo:
-    const { loading, error, data } = useQuery(QUERY_TV_SERIES,
-        {
-            variables: { title: tvSeriesTitle },
-        }
-    );
-
-    if (error) {
-        console.log(error);
-        return (
-            <div className="TvSeriesPage">
-                <p>Could not find the TV Series '{tvSeriesTitle}'.</p>
-                <p>Please try again later.</p>
-            </div>
-        );
-    }
-
-    if (loading) return (
-        <div className="TvSeriesPage">Loading...</div>
-    );
-
-    return (
-        <div className="TvSeriesPage">
-            <h1>{capitalizeFirstLetters(data?.series?.title)}</h1>
-            <h2>{data?.series?.yearBegin}-{data?.series?.yearEnd}</h2>
-            <h2>{data?.series?.popularity}%</h2>
-            <h3>{'<TV Series POSTER. TBD.>'}</h3>
-            <RemoveTvSeriesButton {...data?.series} />
-        </div >
-    );
-}
-
-export default TvSeriesPage;
 
 function RemoveTvSeriesButton({ id }: { id: string }) {
     // Router:
@@ -86,8 +46,10 @@ function RemoveTvSeriesButton({ id }: { id: string }) {
 
 
     return (
-        <div className="RemoveTvSeriesButton" onClick={() => handleDelete()}>
-            <h5>Delete</h5>
+        <div className="BottomButton RedButton" onClick={() => handleDelete()}>
+            Delete
         </div>
     );
 }
+
+export default RemoveTvSeriesButton;
