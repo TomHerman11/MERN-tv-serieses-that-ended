@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { useHistory } from "react-router-dom";
-import { TvSeriesPropsInterface, routerRoutes } from '../../Utils';
+import { TvSeriesPropsInterface, routerRoutes } from '../../Utils/Utils';
 import './TvSeriesForm.css'
 
 const EARLIEST_YEAR_BEGIN = 1920;
@@ -62,10 +62,11 @@ function TvSeriesForm(
 
     return (
         <div className="TvSeriesForm">
+            <h2 className="TvSeriesFormTitle">{submitButtonString} TV Series</h2>
             <form onSubmit={handleSubmit} className="TvSeriesForm">
                 {/* TITLE: */}
                 <div className="formRow">
-                    <input type="text" placeholder={"Title"} value={title} onChange={(e) => {
+                    <input autoFocus type="text" placeholder={"Title"} value={title} onChange={(e) => {
                         setTitleEmptyOnSubmit(false);
                         if (isAllowedTitle(e.target.value)) {
                             setTitle(e.target.value)

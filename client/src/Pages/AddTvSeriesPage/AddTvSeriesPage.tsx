@@ -6,7 +6,7 @@ import {
     insertIntoSortedTvSerieses,
     TvSeriesPropsInterface,
     TvSeriesInterface
-} from '../../Utils';
+} from '../../Utils/Utils';
 import TvSeriesForm from '../common/TvSeriesForm';
 
 function AddTvSeriesPage() {

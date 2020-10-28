@@ -10,10 +10,11 @@ import NavigationButton from './Pages/common/NavigationButton';
 import TvSeriesesPage from './Pages/TvSeriesesPage/TvSeriesesPage';
 import TvSeriesPage from './Pages/TvSeriesPage/TvSeriesPage';
 import RouteNotFound from './Pages/RouteNotFound';
-import { routerRoutes } from './Utils';
+import { routerRoutes } from './Utils/Utils';
 import './App.css';
 
 const SERVER_API_URL = 'http://localhost:4000/graphql';
+
 const apolloClient = new ApolloClient({
   uri: SERVER_API_URL,
   cache: new InMemoryCache()
@@ -24,13 +25,16 @@ function App() {
     <Router>
       <ApolloProvider client={apolloClient}>
         <div className="App">
-          <header className="App-header">
-            <h1>Best TV Serieses That Ended</h1>
-            <h2>{"Popularity & Years on Air"}</h2>
+          <header className="AppHeader">
+            <div className="AppHeaderTitles">
+              <h1>Best TV Serieses That Ended</h1>
+              <h2>{"Popularity & Years on Air"}</h2>
+            </div>
             <div className="navigationButtons">
               <NavigationButton pageTitle="Home" pageRoute={routerRoutes.home} />
               <NavigationButton pageTitle="Add TV Series" pageRoute={routerRoutes.addTvSeries} />
             </div>
+            {/* <div>empty</div> */}
           </header>
 
           <Switch>

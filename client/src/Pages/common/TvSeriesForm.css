@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: LemonChiffon;
+}
+
+.TvSeriesFormTitle {
+    margin: 10px;
 }
 
 .formRow {
@@ -14,8 +19,9 @@
     margin: 5px;
     min-width: 25vw;
     width: 50vmin;
-    border-width: 1px;
-    border-style: solid;
+    border: 1.2px solid rgba(0,0,0,.3);
+    /* border-width: 1px;
+    border-style: solid; */
     border-radius: 4px;
 }
 
