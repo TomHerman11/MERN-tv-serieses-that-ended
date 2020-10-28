@@ -34,7 +34,6 @@ function App() {
               <NavigationButton pageTitle="Home" pageRoute={routerRoutes.home} />
               <NavigationButton pageTitle="Add TV Series" pageRoute={routerRoutes.addTvSeries} />
             </div>
-            {/* <div>empty</div> */}
           </header>
 
           <Switch>
