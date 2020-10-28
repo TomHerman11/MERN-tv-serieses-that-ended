@@ -8,7 +8,8 @@ import {
     MUTATION_UPDATE_TV_SERIES,
     capitalizeFirstLetters,
     TvSeriesInterface,
-} from '../../Utils';
+} from '../../Utils/Utils';
+import Popularity from '../../Utils/Popularity';
 import './TvSeriesPage.css';
 
 function TvSeriesPage() {
@@ -72,7 +73,7 @@ function TvSeriesPage() {
                 <div className="TvSeriesPage">
                     <h1>{capitalizeFirstLetters(queryData?.series?.title)}</h1>
                     <h2>{queryData?.series?.yearBegin}-{queryData?.series?.yearEnd}</h2>
-                    <h2>{queryData?.series?.popularity}%</h2>
+                    <Popularity popularity={queryData?.series?.popularity} size={2} />
                     <h3>{'<TV Series POSTER. TBD.>'}</h3>
                     <div className="BottomButtons">
                         <div className="BottomButton" onClick={() => handleUpdateButtonClick()}>
