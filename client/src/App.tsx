@@ -27,7 +27,7 @@ function App() {
         <div className="App">
           <header className="AppHeader">
             <div className="AppHeaderTitles">
-              <h1>Best TV Serieses That Ended</h1>
+              <h1>Best TV Shows That Ended</h1>
               <h2>{"Popularity & Years on Air"}</h2>
             </div>
             <div className="navigationButtons">
