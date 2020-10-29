@@ -1,7 +1,7 @@
-# MERN-tv-serieses-that-ended
-A Full-Stack MERN (mongoDB, Express.js, React & Node.js) project + Apollo Graphql - Presenting, Adding, Editing & Deleting the BEST TV Serieses That Ended. 📺🎬⭐
+# MERN-tv-shows-that-ended
+A Full-Stack MERN (mongoDB, Express.js, React & Node.js) project + Apollo Graphql - Presenting, Adding, Editing & Deleting the BEST TV Shows That Ended. 📺🎬⭐
 
-Now you will know which TV Serieses you can watch without having to wait anxiously for the next season to come out! 😉
+Now you will know which TV shows you can watch without having to wait anxiously for the next season to come out! 😉
 
 Client & Server are written in TypeScript 🚀
 <br>
@@ -27,7 +27,7 @@ Client & Server are written in TypeScript 🚀
     - Example of using Apollo's Mutation & Update manually Apollo's Query cache (this will updated the client's cache, no need to refresh and pull from the server the new data).
 
 ## How to Start the Server
-1. Make a mongoDB **db** with the name *'tv-serieses-that-ended'* and **collection** *'serieses'*.
+1. Make a mongoDB **db** with the name *'tv-shows-that-ended'* and **collection** *'shows'*.
 2. Terminal: ```cd server; npm install```.
 3. Run options:
     - Via terminal:

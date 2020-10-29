@@ -6,7 +6,7 @@ import { typeDefs, resolversWithMongoDb } from './graphql/schema';
 
 const PORT = 4000;
 const MONGO_URL = 'mongodb://localhost:27017';
-const MONGO_DB_NAME = 'tv-serieses-that-ended';
+const MONGO_DB_NAME = 'tv-shows-that-ended';
 
 const app = express();
 
@@ -18,7 +18,7 @@ const start = async () => {
     // Load MongoDB:
     const db = (await MongoClient.connect(MONGO_URL)).db(MONGO_DB_NAME);
     // console.log(db);
-    const seriesesDb = db.collection('serieses');
+    const seriesesDb = db.collection('shows');
 
     const resolvers = resolversWithMongoDb(seriesesDb);
     const apolloServer = new ApolloServer({ typeDefs, resolvers });
