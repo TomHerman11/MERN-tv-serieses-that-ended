@@ -97,10 +97,30 @@ export function insertIntoSortedTvSerieses(serieses: TvSeriesInterface[], newSer
     return [...serieses.slice(0, index), newSeries, ...serieses.slice(index, serieses.length)];
 };
 
+export function updateSeriesInArray(serieses: TvSeriesInterface[], updatedSeries: TvSeriesInterface): TvSeriesInterface[] {
+    let newArr: TvSeriesInterface[] = []
+    // remove the updated series from the array first:
+    for (let index = 0; index < serieses.length; index++) {
+        if (updatedSeries.id === serieses[index].id) {
+            newArr = [...serieses.slice(0, index), ...serieses.slice(index + 1, serieses.length)];
+        }
+    }
+
+    // insert the updated series in its new index:
+    let index = 0;
+    for (; index < newArr.length; index++) {
+        if ((updatedSeries.popularity > newArr[index].popularity) ||
+            (updatedSeries.popularity === newArr[index].popularity &&
+                updatedSeries.title < newArr[index].title)) {
+            break;
+        }
+    }
+    return [...newArr.slice(0, index), updatedSeries, ...newArr.slice(index, serieses.length)]
+}
+
 export function deleteSeriesFromArray(serieses: TvSeriesInterface[], deletedSeries: string): TvSeriesInterface[] {
     // find the index to remove:
-    let index = 0;
-    for (index = 0; index < serieses.length; index++) {
+    for (let index = 0; index < serieses.length; index++) {
         if (deletedSeries === serieses[index].id) {
             return [...serieses.slice(0, index), ...serieses.slice(index + 1, serieses.length)];
         }

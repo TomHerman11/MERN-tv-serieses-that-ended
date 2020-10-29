@@ -7,7 +7,7 @@ import {
     deleteSeriesFromArray,
     TvSeriesInterface,
     routerRoutes
-} from '../../Utils';
+} from '../../Utils/Utils';
 import './TvSeriesPage.css';
 
 function RemoveTvSeriesButton({ id }: { id: string }) {

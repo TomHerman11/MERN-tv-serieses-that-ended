@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { useHistory } from "react-router-dom";
-import { TvSeriesInterface, QUERY_TV_SERIESES, capitalizeFirstLetters, routerRoutes } from '../../Utils';
+import { TvSeriesInterface, QUERY_TV_SERIESES, capitalizeFirstLetters, routerRoutes } from '../../Utils/Utils';
+import Popularity from '../../Utils/Popularity';
 import './TvSeriesesPage.css';
 
 function TvSeriesesPage() {
@@ -27,11 +28,11 @@ function TvSeries({ id, title, yearBegin, yearEnd, popularity }: TvSeriesInterfa
     return (
         <div className="TvSeries" onClick={() => redirectToTvSeriesPage(title)}>
             <div className="TvSeriesTitle">
-                <h3>{capitalizeFirstLetters(title)}</h3>
+                <h2>{capitalizeFirstLetters(title)}</h2>
             </div>
             <div className="TvSeriesInformation">
-                <h5>{popularity}%</h5>
-                <h5>{yearBegin}-{yearEnd}</h5>
+                <Popularity popularity={popularity} size={4} />
+                <h4>{yearBegin}-{yearEnd}</h4>
             </div>
         </div>
     );

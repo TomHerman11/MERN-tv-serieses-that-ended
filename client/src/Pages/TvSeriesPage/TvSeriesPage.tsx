@@ -5,10 +5,13 @@ import TvSeriesForm from '../common/TvSeriesForm';
 import RemoveTvSeriesButton from './RemoveTvSeriesButton';
 import {
     QUERY_TV_SERIES,
+    QUERY_TV_SERIESES,
     MUTATION_UPDATE_TV_SERIES,
+    updateSeriesInArray,
     capitalizeFirstLetters,
     TvSeriesInterface,
-} from '../../Utils';
+} from '../../Utils/Utils';
+import Popularity from '../../Utils/Popularity';
 import './TvSeriesPage.css';
 
 function TvSeriesPage() {
@@ -27,7 +30,17 @@ function TvSeriesPage() {
 
     // For Update scenario:
     // In case of 'update' *apollo* takes care of updating the cache!
-    const [updateTvSeries, { loading: updateLoading, error: updateError }] = useMutation(MUTATION_UPDATE_TV_SERIES);
+    const [updateTvSeries, { loading: updateLoading, error: updateError }] = useMutation(MUTATION_UPDATE_TV_SERIES, {
+        // Update can be used to update the client's cache:
+        update: (cache, { data: { updateSeries } }) => {
+            const queryRes = cache.readQuery({ query: QUERY_TV_SERIESES }) as { serieses: TvSeriesInterface[] };
+            cache.writeQuery({
+                query: QUERY_TV_SERIESES, data: {
+                    serieses: updateSeriesInArray(queryRes?.serieses, updateSeries) // keep sorted cache
+                }
+            });
+        }
+    });
 
     if (queryLoading) return (<div className="TvSeriesPage">Loading...</div>);
     if (queryError) {
@@ -72,8 +85,7 @@ function TvSeriesPage() {
                 <div className="TvSeriesPage">
                     <h1>{capitalizeFirstLetters(queryData?.series?.title)}</h1>
                     <h2>{queryData?.series?.yearBegin}-{queryData?.series?.yearEnd}</h2>
-                    <h2>{queryData?.series?.popularity}%</h2>
-                    <h3>{'<TV Series POSTER. TBD.>'}</h3>
+                    <Popularity popularity={queryData?.series?.popularity} size={2} />
                     <div className="BottomButtons">
                         <div className="BottomButton" onClick={() => handleUpdateButtonClick()}>
                             Edit
