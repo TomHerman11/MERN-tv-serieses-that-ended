@@ -1,5 +1,5 @@
 # MERN-tv-shows-that-ended
-A Full-Stack MERN (mongoDB, Express.js, React & Node.js) project + Apollo Graphql - Presenting, Adding, Editing & Deleting the BEST TV Shows That Ended. 📺🎬⭐
+A Full-Stack MERN (mongoDB, Express.js, React & Node.js) project + Apollo GraphQL - Presenting, Adding, Editing & Deleting the BEST TV Shows That Ended. 📺🎬⭐
 
 Now you will know which TV shows you can watch without having to wait anxiously for the next season to come out! 😉
 
