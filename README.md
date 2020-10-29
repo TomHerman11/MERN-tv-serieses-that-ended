@@ -7,6 +7,8 @@ Client & Server are written in TypeScript 🚀
 <br>
 <br>
 
+![Demo of 'MERN-tv-shows-that-ended' Project](/MERN-Best-TV-Shows-that-Ended.gif)
+
 ## Super meaningful and important Code:
 ### Server
 - [server/src/index.ts](server/src/index.ts):
