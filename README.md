@@ -9,7 +9,7 @@ Client & Server are written in TypeScript 🚀
 
 ![Demo of 'MERN-tv-shows-that-ended' Project](/MERN-Best-TV-Shows-that-Ended.gif)
 
-## Super meaningful and important Code:
+## Super Meaningful and Important Code:
 ### Server
 - [server/src/index.ts](server/src/index.ts):
     - Create an Express.js server with Apollo GraphQL endpoint
