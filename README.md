@@ -1,7 +1,9 @@
 # MERN-tv-shows-that-ended
-A Full-Stack MERN (mongoDB, Express.js, React & Node.js) project + Apollo GraphQL - Presenting, Adding, Editing & Deleting the BEST TV Shows That Ended. 📺🎬⭐
+A Full-Stack App (React, MongoDb, Node.js, Apollo GraphQL, Typescript) that supports CRUD operations for TV Shows. 📺🎬⭐
 
 Now you will know which TV shows you can watch without having to wait anxiously for the next season to come out! 😉
+
+The goal of this project was to learn MongoDb and Apollo GraphQL, and to create an end-to-end flow of a full stack app.
 
 Client & Server are written in TypeScript 🚀
 <br>
